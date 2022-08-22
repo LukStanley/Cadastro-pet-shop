@@ -7,4 +7,3 @@ inputs.forEach(input => {
         valida(evento.target)
     })
 })
-console.log('Hello Git');
