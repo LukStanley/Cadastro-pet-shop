@@ -4,6 +4,10 @@ export function valida(input){
     if (validadores[tiposDeInput]){
         validadores[tiposDeInput](input)
     }
+
+    if (input.validity.valid){
+            input.parentElement.classList.remove('input-container--invalido')
+    }
 }
 
 const validadores = {
