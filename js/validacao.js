@@ -1,18 +1,40 @@
-export function valida(input){
-    const input = input.dataset.tipo
+const inputs = document.querySelectorAll('input')
+
+inputs.forEach(input => {
+    input.addEventListener('blur', (evento) => {
+        valida(evento.target)
+    })
+})
+ 
+ function valida(input){
+    const tiposDeInput = input.dataset.tipo
 
     if (validadores[tiposDeInput]){
+
         validadores[tiposDeInput](input)
     }
 
     if (input.validity.valid){
             input.parentElement.classList.remove('input-container--invalido')
+            input.parentElement.querySelector('.input-mensagem-erro').innerHTML = ''
     }else{
             input.parentElement.classList.add('input-container--invalido')
+            input.parentElement.querySelector('.input-mensagem-erro').innerHTML = mostraMensagemDeErro(tiposDeInput, input)
     }
+    
+
+
 }
 
-const mensagemDeErro = {
+
+const tiposDeErro = [
+    'valueMissing',
+    'typeMismatch',
+    'patternMismatch',
+    'customError'
+]
+
+const mensagensDeErro = {
     nome:{
         valueMissing: 'O campo nome não pode estar vazio.'
     },
@@ -37,6 +59,18 @@ const validadores = {
     dataNascimento: input => validaDataNascimento(input)
 }
 
+function mostraMensagemDeErro(tiposDeInput, input) {
+    let mensagem  = ''
+
+    tiposDeErro.forEach(erro => {
+        if(input.validity[erro]){
+            mensagem = mensagensDeErro[tiposDeInput][erro]
+        }
+    } )
+
+    return mensagem
+}
+
 function validaDataNascimento(input){
     const dataRecebida = new Date(input.value);
     let mensagem = ''
@@ -57,4 +91,3 @@ function maiorQue18(data){
     return dataMais18 <= dataAtual;
 
 }
-console.log("hello")
