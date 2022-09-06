@@ -22,10 +22,7 @@ inputs.forEach(input => {
             input.parentElement.querySelector('.input-mensagem-erro').innerHTML = mostraMensagemDeErro(tiposDeInput, input)
     }
     
-
-
 }
-
 
 const tiposDeErro = [
     'valueMissing',
@@ -49,6 +46,10 @@ const mensagensDeErro = {
     dataNascimento: {
         valueMissing: 'O campo de data de nascimento não pode estar vazio.',
         customError:  'Você deve ter mais de 18 anos para efetuar o cadastro.'
+    },
+    cpf:{
+        valueMissing: 'O campo de CPf não pode estar vazio.',
+        customError: 'O CPF digitado nã é válido.'
     }  
 
 
@@ -56,7 +57,8 @@ const mensagensDeErro = {
 }
 
 const validadores = {
-    dataNascimento: input => validaDataNascimento(input)
+    dataNascimento: input => validaDataNascimento(input),
+    cpf: input => validaCpf(input)
 }
 
 function mostraMensagemDeErro(tiposDeInput, input) {
@@ -91,3 +93,46 @@ function maiorQue18(data){
     return dataMais18 <= dataAtual;
 
 }
+function validaCpf(input){
+    const cpfFormatado = input.value.replace( /\D/g, '')
+    let mensagem = ''
+
+    if(!checaCpfRepetido(cpfFormatado)){
+        mensagem = 'O CPf digitado não é válido.'
+    }
+
+    input.setCustomValidity(mensagem)
+}
+
+function checaCpfRepetido(cpf){
+    const valoresRepetidos = [
+        '00000000000',
+        '11111111111',
+        '22222222222',
+        '33333333333',
+        '44444444444',
+        '55555555555',
+        '66666666666',
+        '77777777777',
+        '88888888888',
+        '99999999999'
+
+    ]
+
+    let cpfValido = true
+
+    valoresRepetidos.forEach( valor => {
+        if (valor === cpf){
+            cpfValido = false
+        }
+
+        
+    })
+
+    return cpfValido
+
+
+   
+
+}
+console.log('hrllo')
