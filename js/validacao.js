@@ -50,7 +50,12 @@ const mensagensDeErro = {
     cpf:{
         valueMissing: 'O campo de CPf não pode estar vazio.',
         customError: 'O CPF digitado nã é válido.'
-    }  
+    },
+    
+    cep: {
+        valueMissing: 'O campo de CEP não pode estar vazio.',
+        patternMismatch: 'O CEP digitado não é válido.'
+    }
 
 
 
@@ -164,6 +169,3 @@ function confirmaDigito(soma){
     return 11 - (soma % 11)
 }
 
-//let soma = (10 * 1) + (9 * 2) + (8 * 3) ... (2 *9)
-
-//let digitoVerificador = 11 - (soma % 11)
